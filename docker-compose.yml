@@ -5,8 +5,9 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_USER: root
+            MYSQL_DATABASE: "emove"
         volumes:
-            - mysql_data_project:/var/lib/mysql
+            - mysql_data_emove:/var/lib/mysql
 
     php:
         build: ./docker/php-fpm
@@ -37,4 +38,4 @@ services:
           ports:
               - 8081:8080
 volumes:
-  mysql_data_project: {}
+  mysql_data_emove: {}

@@ -5837,3 +5837,5 @@
 172.31.0.1 - - [12/Jun/2018:10:50:41 +0000] "GET /_wdt/9054b2 HTTP/1.1" 200 16915 "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
 172.31.0.1 - - [12/Jun/2018:10:50:42 +0000] "GET /robots.txt HTTP/1.1" 404 217785 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
 172.31.0.1 - - [12/Jun/2018:11:03:40 +0000] "GET /robots.txt HTTP/1.1" 500 61849 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+172.31.0.1 - - [12/Jun/2018:12:33:56 +0000] "GET / HTTP/1.1" 404 4748 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36"
+172.31.0.1 - - [12/Jun/2018:12:33:57 +0000] "GET /favicon.ico HTTP/1.1" 500 61893 "http://localhost:8080/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36"
