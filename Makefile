@@ -64,5 +64,4 @@ infra-rebuild:
 
 ## Fixes permission on cache & logs
 app-permissions-fix:
-   	docker-compose exec php chown -R www-data:www-data var/cache && rm -rf var/cache/*
-   	docker-compose exec php chown -R www-data:www-data var/logs
+	docker-compose exec php chmod -R 777 ./
