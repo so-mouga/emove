@@ -1,6 +1,6 @@
 security:
     encoders:
-        App\Entity\User: plaintext
+        App\Entity\User: bcrypt
 
     role_hierarchy:
         ROLE_SELLER:      [ROLE_USER]
@@ -13,16 +13,28 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+        auth_token_user_provider:
+            id: App\Security\AuthTokenUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api(?!/auth-tokens$)
+            stateless: true
+            simple_preauth:
+                authenticator: App\Security\AuthTokenAuthenticator
+            provider: auth_token_user_provider
+            anonymous: ~
         main:
             provider: user
             anonymous: ~
             form_login:
                 login_path: login
                 check_path: login
+                default_target_path: test
+
 
             # activate different ways to authenticate
 
