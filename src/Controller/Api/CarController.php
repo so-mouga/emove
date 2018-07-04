@@ -1,16 +1,18 @@
 <?php
 /**
- * @author Kevin Mougammadaly <kevin.mougammadaly@ekino.com>
+ * Created by PhpStorm.
+ * User: kevinmouga
+ * Date: 04/07/2018
+ * Time: 09:43
  */
 namespace App\Controller\Api;
 
-use App\Entity\User;
+use FOS\RestBundle\FOSRestBundle;
 use App\Repository\UserRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\FOSRestBundle;
 use Symfony\Component\HttpFoundation\Request;
 
-class UserController extends FOSRestBundle
+class CarController extends FOSRestBundle
 {
     /**
      * @var UserRepository
@@ -23,7 +25,7 @@ class UserController extends FOSRestBundle
     }
 
     /**
-     * @Rest\Get("/users")
+     * @Rest\Get("/cars")
      * @Rest\View()
      */
     public function getList(Request $request)

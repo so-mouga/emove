@@ -3,7 +3,7 @@
  * @author Kevin Mougammadaly <kevin.mougammadaly@ekino.com>
  */
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\TokenRequired;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;

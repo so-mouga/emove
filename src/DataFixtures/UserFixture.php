@@ -25,7 +25,7 @@ class UserFixture extends Fixture
         $users = [
             [
                 'email'     =>  'kevin@gmail.com',
-                'role'     =>  ['ROLE_SELLER'],
+                'role'     =>  ['ROLE_ADMIN'],
             ],
             [
                 'email'     =>  'lucille@gmail.com',
