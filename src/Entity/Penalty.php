@@ -31,6 +31,17 @@ class Penalty
      */
     private $commentary;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Rental::class, inversedBy="penalties")
+     */
+    private $rental;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Payment::class)
+     */
+    private $payment;
+
+
     public function getId()
     {
         return $this->id;
@@ -70,5 +81,37 @@ class Penalty
         $this->commentary = $commentary;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRental(): Rental
+    {
+        return $this->rental;
+    }
+
+    /**
+     * @param mixed $rental
+     */
+    public function setRental($rental): void
+    {
+        $this->rental = $rental;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayment(): Payment
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @param mixed $payment
+     */
+    public function setPayment(Payment $payment): void
+    {
+        $this->payment = $payment;
     }
 }

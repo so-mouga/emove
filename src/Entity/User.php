@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
@@ -90,6 +91,20 @@ class User implements UserInterface
      */
     private $roles = array();
 
+    /**
+     * @ORM\OneToMany(targetEntity=Rental::class, cascade={"persist", "remove"}, mappedBy="user")
+     */
+    private $rentals;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Agency::class, inversedBy="users")
+     */
+    private $agency;
+
+    public function __construct()
+    {
+        $this->rentals = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -274,4 +289,44 @@ class User implements UserInterface
     {
         $this->password = $password;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRentals()
+    {
+        return $this->rentals;
+    }
+
+    /**
+     * @param mixed $rentals
+     */
+    public function setRentals(Rental $rentals): void
+    {
+        $this->rentals = $rentals;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgency(): Agency
+    {
+        return $this->agency;
+    }
+
+    /**
+     * @param mixed $agency
+     */
+    public function setAgency($agency): void
+    {
+        $this->agency = $agency;
+    }
+
+    public function addRentals(Rental $rental)
+    {
+        $this->rentals->add($rental);
+        $rental->setAgency($this);
+    }
+
+
 }

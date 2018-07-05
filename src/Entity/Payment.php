@@ -36,6 +36,10 @@ class Payment
      */
     private $amount;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Rental::class, mappedBy="payment")
+     */
+    private $rental;
 
 
     public function getId()
@@ -90,4 +94,14 @@ class Payment
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRental()
+    {
+        return $this->rental;
+    }
+
+
 }
