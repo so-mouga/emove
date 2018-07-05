@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,56 +20,214 @@ class Rental
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_begin;
+    private $startAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date_end;
+    private $endAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $returnAt;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $kilometers;
+    private $kilometerStart;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $kilometerEnd;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="rentals")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Agency::class, inversedBy="rentals")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $agency;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Vehicle::class, cascade={"persist", "remove"}, inversedBy="rental")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vehicle;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Payment::class, cascade={"persist", "remove"}, inversedBy="rental")
+     */
+    private $payment;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Penalty::class, cascade={"persist", "remove"}, mappedBy="rental")
+     */
+    private $penalties;
+
+    public function __construct()
+    {
+        $this->penalties = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgency()
+    {
+        return $this->agency;
+    }
+
+    /**
+     * @param mixed $agency
+     */
+    public function setAgency(Agency $agency): void
+    {
+        $this->agency = $agency;
+    }
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function getDateBegin(): ?\DateTimeInterface
+    public function getStartAt(): ?\DateTimeInterface
     {
-        return $this->date_begin;
+        return $this->startAt;
     }
 
-    public function setDateBegin(\DateTimeInterface $date_begin): self
+    public function setStartAt(\DateTimeInterface $startAt): self
     {
-        $this->date_begin = $date_begin;
+        $this->startAt = $startAt;
 
         return $this;
     }
 
-    public function getDateEnd(): ?\DateTimeInterface
+    public function getEndAt(): ?\DateTimeInterface
     {
-        return $this->date_end;
+        return $this->endAt;
     }
 
-    public function setDateEnd(?\DateTimeInterface $date_end): self
+    public function setEndAt(?\DateTimeInterface $endAt): self
     {
-        $this->date_end = $date_end;
+        $this->endAt = $endAt;
 
         return $this;
     }
 
-    public function getKilometers(): ?int
+    /**
+     * @return mixed
+     */
+    public function getKilometerStart(): int
     {
-        return $this->kilometers;
+        return $this->kilometerStart;
     }
 
-    public function setKilometers(int $kilometers): self
+    /**
+     * @param mixed $kilometerStart
+     */
+    public function setKilometerStart(int $kilometerStart): void
     {
-        $this->kilometers = $kilometers;
-
-        return $this;
+        $this->kilometerStart = $kilometerStart;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getKilometerEnd(): int
+    {
+        return $this->kilometerEnd;
+    }
+
+    /**
+     * @param mixed $kilometerEnd
+     */
+    public function setKilometerEnd(int $kilometerEnd): void
+    {
+        $this->kilometerEnd = $kilometerEnd;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVehicle(): Vehicle
+    {
+        return $this->vehicle;
+    }
+
+    /**
+     * @param mixed $vehicle
+     */
+    public function setVehicle(Vehicle $vehicle): void
+    {
+        $this->vehicle = $vehicle;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPayment(): Payment
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @param mixed $payment
+     */
+    public function setPayment(Payment $payment): void
+    {
+        $this->payment = $payment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReturnAt(): ?\DateTimeInterface
+    {
+        return $this->returnAt;
+    }
+
+    /**
+     * @param mixed $returnAt
+     */
+    public function setReturnAt(\DateTimeInterface $returnAt): void
+    {
+        $this->returnAt = $returnAt;
+    }
+
+    public function getPenalties()
+    {
+        return $this->penalties;
+    }
+
+    public function addAnswer(Penalty $penalty)
+    {
+        $this->penalties->add($penalty);
+        $penalty->setRental($this);
+    }
+
+
+
+
 }

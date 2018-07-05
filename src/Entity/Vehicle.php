@@ -56,6 +56,28 @@ class Vehicle
      */
     private $nbSeets;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $indexPrice;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Agency::class, inversedBy="vehicles")
+     */
+    private $agency;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Type::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Rental::class, mappedBy="vehicle")
+     */
+    private $rental;
+
+
     public function getId()
     {
         return $this->id;
@@ -155,5 +177,65 @@ class Vehicle
         $this->nbSeets = $nbSeets;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAgency(): Agency
+    {
+        return $this->agency;
+    }
+
+    /**
+     * @param mixed $agency
+     */
+    public function setAgency(Agency $agency): self
+    {
+        $this->agency = $agency;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType(): Type
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType(Type $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIndexPrice()
+    {
+        return $this->indexPrice;
+    }
+
+    /**
+     * @param mixed $indexPrice
+     */
+    public function setIndexPrice($indexPrice): void
+    {
+        $this->indexPrice = $indexPrice;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRental()
+    {
+        return $this->rental;
     }
 }
