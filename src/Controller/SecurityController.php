@@ -13,10 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class SecurityController extends Controller
 {
-    public function __construct()
-    {
-    }
-
     /**
      * @Route("/login", name="login")
      */
