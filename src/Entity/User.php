@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @Serializer\ExclusionPolicy("ALL")
  */
 class User implements UserInterface
 {
@@ -14,21 +17,29 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Serializer\Expose
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Serializer\Expose
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     *
+     * @Serializer\Expose
      */
     private $email;
 
@@ -39,31 +50,43 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Serializer\Expose
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=10)
+     *
+     * @Serializer\Expose
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=14)
+     *
+     * @Serializer\Expose
      */
     private $phone;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose
      */
     private $permis;
 
     /**
      * @ORM\Column(name="roles", type="array")
+     *
+     * @Serializer\Expose
      */
     private $roles = array();
 

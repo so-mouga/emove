@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ee7af35e89b8f736447878172fbc6e7",
+    "content-hash": "205c063cb67bbd40c44d39d6de0bb780",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -6446,16 +6446,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "bc88ad53e825ebacc7b190bbd360781fce381c64"
+                "reference": "b2eebaec085d1f2cafbad7644733d494a3bbbc9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/bc88ad53e825ebacc7b190bbd360781fce381c64",
-                "reference": "bc88ad53e825ebacc7b190bbd360781fce381c64",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/b2eebaec085d1f2cafbad7644733d494a3bbbc9b",
+                "reference": "b2eebaec085d1f2cafbad7644733d494a3bbbc9b",
                 "shasum": ""
             },
             "require": {
@@ -6517,7 +6517,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2018-04-29T07:56:09+00:00"
+            "time": "2018-06-23T12:23:56+00:00"
         },
         {
             "name": "symfony/web-profiler-bundle",
