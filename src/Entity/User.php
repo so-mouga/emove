@@ -319,6 +319,10 @@ class User implements UserInterface
      */
     public function setAgency($agency): void
     {
+        if (!in_array('ROLE_SELLER', $this->getRoles())) {
+            return;
+        }
+
         $this->agency = $agency;
     }
 

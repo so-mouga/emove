@@ -28,6 +28,11 @@ class Agency
     private $city;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $postalCode;
+
+    /**
      * @ORM\OneToMany(targetEntity=Rental::class, cascade={"persist", "remove"}, mappedBy="agency")
      */
     private $rentals;
@@ -114,4 +119,22 @@ class Agency
         $this->vehicles->add($vehicle);
         $vehicle->setAgency($this);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * @param mixed $postalCode
+     */
+    public function setPostalCode($postalCode): void
+    {
+        $this->postalCode = $postalCode;
+    }
+
+
 }

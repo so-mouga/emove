@@ -67,7 +67,7 @@ class Vehicle
     private $agency;
 
     /**
-     * @ORM\OneToOne(targetEntity=Type::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Type::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
