@@ -23,6 +23,8 @@ class UserType extends AbstractType
             ->add('adresse', TextType::class)
             ->add('postalCode', TextType::class)
             ->add('phone', TextType::class)
+            ->add('birthday', DateTimeType::class, ['format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
+            ->add('permis', DateTimeType::class, ['format' => 'dd/MM/yyyy', 'widget' => 'single_text'])
         ;
     }
 
