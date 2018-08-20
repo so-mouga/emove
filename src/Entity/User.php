@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -15,12 +16,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+    // Group api for nelmio and jms
+    const API_GET  = 'api_method_get_user';
+    const API_POST = 'api_method_post_user';
+    const API_PUT  = 'api_method_put_user';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET})
      */
     private $id;
 
@@ -32,6 +39,7 @@ class User implements UserInterface
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $firstName;
 
@@ -43,6 +51,7 @@ class User implements UserInterface
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $lastName;
 
@@ -55,6 +64,7 @@ class User implements UserInterface
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $email;
 
@@ -65,6 +75,8 @@ class User implements UserInterface
      * @Assert\NotNull()
      * @Assert\Length(max="255")
      *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_POST})
      */
     private $password;
 
@@ -76,6 +88,9 @@ class User implements UserInterface
      * @Assert\DateTime()
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
+     *
+     * @SWG\Property(example="13/06/2018")
      */
     private $birthday;
 
@@ -87,6 +102,7 @@ class User implements UserInterface
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $adresse;
 
@@ -98,6 +114,7 @@ class User implements UserInterface
      * @Assert\Length(max="10")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $postalCode;
 
@@ -109,6 +126,7 @@ class User implements UserInterface
      * @Assert\Length(max="15")
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $phone;
 
@@ -120,13 +138,14 @@ class User implements UserInterface
      * @Assert\DateTime()
      *
      * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
+     *
+     * @SWG\Property(example="13/06/2018")
      */
     private $permis;
 
     /**
      * @ORM\Column(name="roles", type="array")
-     *
-     * @Serializer\Expose
      */
     private $roles = array();
 

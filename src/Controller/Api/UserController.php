@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\FOSRestBundle;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Symfony\Component\HttpFoundation\Response;
-
+use Swagger\Annotations as SWG;
 
 class UserController extends FOSRestBundle
 {
@@ -53,6 +54,27 @@ class UserController extends FOSRestBundle
     /**
      * @Rest\Post("/create/users")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
+     *
+     * @SWG\Post(
+     *     summary="Create a user",
+     *     tags={"Users"},
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="user",
+     *         in="body",
+     *         required=true,
+     *         @Model(type=User::class, groups={User::API_POST})
+     *     ),
+     *     @SWG\Response(
+     *          response=201,
+     *          description="User created with success"
+     *     ),
+     *     @SWG\Response(
+     *          response=422,
+     *          description="An error occurred on user creation"
+     *     )
+     * )
      *
      * @param Request $request
      */
