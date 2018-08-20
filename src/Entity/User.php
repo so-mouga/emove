@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -26,12 +27,20 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
      * @Serializer\Expose
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
      *
      * @Serializer\Expose
      */
@@ -40,17 +49,31 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Email()
+     * @Assert\Length(max="255")
+     *
      * @Serializer\Expose
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
      */
     private $password;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\DateTime()
      *
      * @Serializer\Expose
      */
@@ -59,12 +82,20 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
      * @Serializer\Expose
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=10)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="10")
      *
      * @Serializer\Expose
      */
@@ -73,12 +104,20 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=14)
      *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="15")
+     *
      * @Serializer\Expose
      */
     private $phone;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\DateTime()
      *
      * @Serializer\Expose
      */
