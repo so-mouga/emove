@@ -4,46 +4,87 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AgencyRepository")
  */
 class Agency
 {
+    // Group api for nelmio and jms
+    const API_GET  = 'api_method_get_user';
+    const API_POST = 'api_method_post_user';
+    const API_PUT  = 'api_method_put_user';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=10)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $postalCode;
 
     /**
      * @ORM\OneToMany(targetEntity=Rental::class, cascade={"persist", "remove"}, mappedBy="agency")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_PUT})
      */
     private $rentals;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, cascade={"persist", "remove"}, mappedBy="agency")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_PUT})
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Vehicle::class, cascade={"persist", "remove"}, mappedBy="agency")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
      */
     private $vehicles;
 
