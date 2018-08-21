@@ -8,6 +8,7 @@ namespace App\Controller\Api\TokenRequired;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -17,6 +18,9 @@ use FOS\RestBundle\Controller\Annotations as Rest; // alias pour toutes les anno
 use App\Form\CredentialsType;
 use App\Entity\AuthToken;
 use App\Entity\Credentials;
+use Swagger\Annotations as SWG;
+use Nelmio\ApiDocBundle\Annotation\Operation;
+
 
 class AuthTokenController extends Controller
 {
@@ -42,6 +46,21 @@ class AuthTokenController extends Controller
     /**
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Rest\Delete("/auth-tokens/{id}")
+     *
+     * @Operation(
+     *     summary="Delete token",
+     *     tags={"Auth"},
+     *     @SWG\Parameter(
+     *          name="id",
+     *          description="The token number of the user",
+     *          in="path",
+     *          required=true, type="string"
+     *     ),
+     *     @SWG\Response(
+     *          response=204,
+     *          description="Delete ok",
+     *     ),
+     * )
      */
     public function removeAuthTokenAction(Request $request)
     {
@@ -63,6 +82,43 @@ class AuthTokenController extends Controller
     /**
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/auth-tokens")
+     *
+     * @Operation(
+     *     summary="Connexion to get token",
+     *     tags={"Auth"},
+     *     @SWG\Parameter(
+     *          name="login",
+     *          in="query",
+     *          required=true,
+     *          type="string",
+     *      ),
+     *     @SWG\Parameter(
+     *          name="password",
+     *          in="query",
+     *          required=true,
+     *          type="string",
+     *      ),
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Return an user",
+     *          @SWG\Schema(
+     *              @SWG\Property(property="id", type="integer"),
+     *              @SWG\Property(property="value", type="string",  example="token"),
+     *              @SWG\Property(property="created_at", type="string", example="13/06/2018"),
+     *              @SWG\Property(property="user", ref=@Model(type=User::class, groups={User::API_GET})),
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="User not found with your parameters",
+     *      ),
+     *
+     *      @SWG\Response(
+     *          response=400,
+     *          description="Parameter not allowed",
+     *      ),
+     * )
+     *
      */
     public function postAuthTokensAction(Request $request)
     {
