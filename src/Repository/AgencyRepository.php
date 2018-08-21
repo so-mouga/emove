@@ -19,6 +19,18 @@ class AgencyRepository extends ServiceEntityRepository
         parent::__construct($registry, Agency::class);
     }
 
+    public function findAll()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = "SELECT * FROM agency";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
 //    /**
 //     * @return Agency[] Returns an array of Agency objects
 //     */
