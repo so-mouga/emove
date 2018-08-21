@@ -77,6 +77,7 @@ class UserController extends FOSRestBundle
      * )
      *
      * @param Request $request
+     * @return User|JsonResponse
      */
     public function createUser(Request $request)
     {
