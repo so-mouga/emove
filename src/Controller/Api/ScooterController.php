@@ -4,9 +4,11 @@
  */
 namespace App\Controller\Api;
 
-use App\Entity\User;
-use App\Form\UserType;
-use App\Repository\UserRepository;
+use App\Entity\Type;
+use App\Entity\Vehicle;
+use App\Form\VehicleType;
+use App\Repository\VehicleRepository;
+use App\Repository\TypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\FOSRestBundle;
@@ -21,14 +23,14 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Symfony\Component\HttpFoundation\Response;
 use Swagger\Annotations as SWG;
 
-class UserController extends FOSRestBundle
+class ScooterController extends FOSRestBundle
 {
     use ApiErrorsTrait;
 
     /**
-     * @var UserRepository
+     * @var VehicleRepository
      */
-    private $userRepository;
+    private $vehicleRepository;
 
     /**
      * @var FormFactory
@@ -41,62 +43,67 @@ class UserController extends FOSRestBundle
     private $doctrine;
 
     public function __construct(
-        UserRepository $userRepository,
+        TypeRepository $typeRepository,
+        VehicleRepository $vehicleRepository,
         FormFactoryInterface $formFactory,
         EntityManagerInterface $doctrine
     )
     {
-        $this->userRepository = $userRepository;
+        $this->typeRepository = $typeRepository;
+        $this->vehicleRepository = $vehicleRepository;
         $this->formFactory = $formFactory;
         $this->doctrine = $doctrine;
     }
 
     /**
-     * @Rest\Post("/create/users")
+     * @Rest\Post("/scooter")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      *
      * @SWG\Post(
-     *     summary="Create a user",
-     *     tags={"Users"},
+     *     summary="Create a scooter",
+     *     tags={"Scooters"},
      *     consumes={"application/json"},
      *     produces={"application/json"},
      *     @SWG\Parameter(
-     *         name="user",
+     *         name="vehicle",
      *         in="body",
      *         required=true,
-     *         @Model(type=User::class, groups={User::API_POST})
+     *         @Model(type=Vehicle::class, groups={Vehicle::API_POST})
      *     ),
      *     @SWG\Response(
      *          response=201,
-     *          description="User created with success"
+     *          description="Scooter created with success"
      *     ),
      *     @SWG\Response(
      *          response=422,
-     *          description="An error occurred on user creation"
+     *          description="An error occurred on scooter creation"
      *     )
      * )
      *
      * @param Request $request
-     * @return User|JsonResponse
      */
-    public function createUser(Request $request)
-    {
-        $user = new User();
-        $user->setRoles(['ROLE_USER']);
 
-        return $this->handleUser($user, $request);
-    }
+    //CA MARCHE PUTAIN, quand t'envoies les données 
+    /*public function createScooter(Request $request)
+    {
+        $scooter = new Vehicle();
+        //$type = $this->typeRepository->findOneById(5);
+
+        //$scooter->setType(new Type());
+        return $this->handleVehicle($scooter, $request);
+    }*/
 
     /**
-     * @param User    $user
+     * @param Vehicle $vehicle
      * @param Request $request
      * @param bool    $clearMissing
      *
-     * @return User|JsonResponse
+     * @return Vehicle|JsonResponse
      */
-    private function handleUser(User $user, Request $request, bool $clearMissing = true)
+    private function handleVehicle(Vehicle $vehicle, Request $request, bool $clearMissing = true)
     {
-        $form = $this->formFactory->create(UserType::class, $user);
+
+        $form = $this->formFactory->create(VehicleType::class, $vehicle);
         $form->submit($request->request->all(), $clearMissing);
 
         if (!$form->isValid()) {
@@ -105,30 +112,51 @@ class UserController extends FOSRestBundle
             return new JsonResponse(['message' => 'Invalid data sent', 'errors' => $readableErrors], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->doctrine->persist($user);
+        $this->doctrine->persist($vehicle);
         $this->doctrine->flush();
 
-        return $user;
+        return $vehicle;
     }
 
     /**
-     * @Rest\Get("/user/{id}")
+     * @Rest\Get("/scooters")
      * @Rest\View(statusCode=Response::HTTP_OK)
      *
      * @SWG\Get(
-     *     summary="Get a user",
-     *     tags={"Users"},
+     *     summary="Get scooters",
+     *     tags={"Scooters"},
      *     consumes={"application/json"},
      *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="X-Auth-Token",
-     *         in="header",
-     *         required=true,
-     *         type="string"
-     *     ),
+
      *     @SWG\Response(
      *          response=200,
-     *          description="User retrieved"
+     *          description="Scooters retrieved"
+     *     ),
+     *     @SWG\Response(
+     *          response=422,
+     *          description="An error occurred"
+     *     )
+     * )
+     *
+     */
+    public function getScooters()
+    {
+        return $this->vehicleRepository->findAllScooters();
+    }
+
+    /**
+     * @Rest\Get("/scooter/{id}")
+     * @Rest\View(statusCode=Response::HTTP_OK)
+     *
+     * @SWG\Get(
+     *     summary="Get a scooter",
+     *     tags={"Scooters"},
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Scooter retrieved"
      *     ),
      *     @SWG\Response(
      *          response=422,
@@ -137,8 +165,8 @@ class UserController extends FOSRestBundle
      * )
      * @param int id
      */
-    public function getUser($id)
+    public function getScooter($id)
     {
-        return $this->userRepository->findOneById($id);
+        return $this->vehicleRepository->findOneScooterById($id);
     }
 }

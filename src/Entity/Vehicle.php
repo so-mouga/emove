@@ -3,77 +3,145 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehicleRepository")
  */
 class Vehicle
 {
+    // Group api for nelmio and jms
+    const API_GET  = 'api_method_get_vehicle';
+    const API_POST = 'api_method_post_vehicle';
+    const API_PUT  = 'api_method_put_vehicle';
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $model;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $color;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $mileage;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $numberPlate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     * @Assert\Length(max="255")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $vehiculeCondition;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $nbDoors;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $nbSeets;
 
     /**
      * @ORM\Column(type="integer")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_POST, Vehicle::API_PUT})
      */
     private $indexPrice;
 
     /**
      * @ORM\ManyToOne(targetEntity=Agency::class, inversedBy="vehicles")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_PUT})
      */
     private $agency;
 
     /**
      * @ORM\ManyToOne(targetEntity=Type::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_PUT})
+     * 
      */
     private $type;
 
     /**
      * @ORM\OneToOne(targetEntity=Rental::class, mappedBy="vehicle")
+     *
+     * @Serializer\Expose
+     * @Serializer\Groups({Vehicle::API_GET, Vehicle::API_PUT})
      */
     private $rental;
 
@@ -182,7 +250,7 @@ class Vehicle
     /**
      * @return mixed
      */
-    public function getAgency(): Agency
+    public function getAgency(): ?Agency
     {
         return $this->agency;
     }
@@ -200,7 +268,7 @@ class Vehicle
     /**
      * @return mixed
      */
-    public function getType(): Type
+    public function getType(): ?Type
     {
         return $this->type;
     }

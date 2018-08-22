@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Vehicle;
+use App\Repository\TypeRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -18,6 +19,40 @@ class VehicleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Vehicle::class);
     }
+
+    public function findAllScooters()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = "SELECT * FROM vehicle WHERE type_id like (SELECT id FROM type WHERE type.name like 'scooter')";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    public function findOneScooterById($id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = "SELECT * FROM vehicle WHERE id = :id AND type_id like (SELECT id FROM type WHERE type.name like 'scooter')";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
+    public function getScooterType()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        
+        $sql = "SELECT * FROM vehicle WHERE id = :id AND type_id like (SELECT id FROM type WHERE type.name like 'scooter')";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
 
 //    /**
 //     * @return Vehicle[] Returns an array of Vehicle objects

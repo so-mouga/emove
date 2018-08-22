@@ -14,9 +14,9 @@ use Swagger\Annotations as SWG;
 class Agency
 {
     // Group api for nelmio and jms
-    const API_GET  = 'api_method_get_user';
-    const API_POST = 'api_method_post_user';
-    const API_PUT  = 'api_method_put_user';
+    const API_GET  = 'api_method_get_agency';
+    const API_POST = 'api_method_post_agency';
+    const API_PUT  = 'api_method_put_agency';
 
     /**
      * @ORM\Id()
@@ -24,7 +24,7 @@ class Agency
      * @ORM\Column(type="integer")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET})
+     * @Serializer\Groups({Agency::API_GET})
      */
     private $id;
 
@@ -36,7 +36,7 @@ class Agency
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
+     * @Serializer\Groups({Agency::API_GET, Agency::API_POST, Agency::API_PUT})
      */
     private $name;
 
@@ -48,7 +48,7 @@ class Agency
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
+     * @Serializer\Groups({Agency::API_GET, Agency::API_POST, Agency::API_PUT})
      */
     private $city;
 
@@ -60,7 +60,7 @@ class Agency
      * @Assert\Length(max="255")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
+     * @Serializer\Groups({Agency::API_GET, Agency::API_POST, Agency::API_PUT})
      */
     private $postalCode;
 
@@ -68,7 +68,7 @@ class Agency
      * @ORM\OneToMany(targetEntity=Rental::class, cascade={"persist", "remove"}, mappedBy="agency")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET, User::API_PUT})
+     * @Serializer\Groups({Agency::API_GET, Agency::API_PUT})
      */
     private $rentals;
 
@@ -76,7 +76,7 @@ class Agency
      * @ORM\OneToMany(targetEntity=User::class, cascade={"persist", "remove"}, mappedBy="agency")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET, User::API_PUT})
+     * @Serializer\Groups({Agency::API_GET, Agency::API_PUT})
      */
     private $users;
 
@@ -84,7 +84,7 @@ class Agency
      * @ORM\OneToMany(targetEntity=Vehicle::class, cascade={"persist", "remove"}, mappedBy="agency")
      *
      * @Serializer\Expose
-     * @Serializer\Groups({User::API_GET, User::API_POST, User::API_PUT})
+     * @Serializer\Groups({Agency::API_GET, Agency::API_POST, Agency::API_PUT})
      */
     private $vehicles;
 
